@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 
 [Serializable]
-public class BotInteractSystem
+public class BotCollector
 {
     [SerializeField] private Transform _interactPoint;
     [SerializeField] private float _inteartionRadius;

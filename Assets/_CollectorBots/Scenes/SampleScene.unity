@@ -212,7 +212,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.9150943, g: 0.47826624, b: 0.8422897, a: 0.3254902}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -649,8 +649,8 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
-  m_LocalRotation: {x: -0.005618775, y: 0.9270693, z: 0.013906522, w: 0.37458977}
-  m_LocalPosition: {x: 1.6775055, y: 3.9946587, z: 9.283667}
+  m_LocalRotation: {x: -0.11613395, y: -0.8816183, z: 0.28814977, w: -0.3552911}
+  m_LocalPosition: {x: -8.262238, y: 11.199524, z: 21.881577}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -757,7 +757,7 @@ Transform:
   m_GameObject: {fileID: 979612563}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 30, y: 30, z: 30}
+  m_LocalScale: {x: 20, y: 20, z: 20}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -936,7 +936,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1848184362}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.37, y: 0.1, z: 1.379}
+  m_LocalPosition: {x: -2.174, y: 0.1, z: 1.985}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1103,7 +1103,7 @@ GameObject:
   - component: {fileID: 6270248926715069360}
   - component: {fileID: 6270248926715069361}
   m_Layer: 0
-  m_Name: MSFMC_RadarDish
+  m_Name: RadarDish
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1122,14 +1122,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _radar:
-    _spawner: {fileID: 0}
-    _animator: {fileID: 0}
+    _currentBase: {fileID: 6270248926715069360}
+    _spawner: {fileID: 760707187}
+    _animator: {fileID: 8825726445261269046}
   _botPrefab: {fileID: 3310595932157493937, guid: c464bb8e280c1a042a6f88941edf0960, type: 3}
   _botSpawnPoint: {fileID: 1848184363}
   _crystalLayer:
     serializedVersion: 2
     m_Bits: 128
-  GivenCrystals: []
 --- !u!65 &6270248926715069361
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1149,7 +1149,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 7, y: 2, z: 7}
+  m_Size: {x: 4.2581186, y: 2, z: 4.505422}
   m_Center: {x: 0, y: 1, z: 0}
 --- !u!23 &7589512095843941761
 MeshRenderer:

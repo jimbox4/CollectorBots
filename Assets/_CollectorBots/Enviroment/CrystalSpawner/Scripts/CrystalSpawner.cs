@@ -53,12 +53,12 @@ public class CrystalSpawner : MonoBehaviour
 
         for (int i = 0; i < crystalCount; i++)
         {
-            Crystal crystal = Instantiate(_crystalPrefab, GetNewPosition(), Quaternion.identity);
+            Crystal crystal = Instantiate(_crystalPrefab, GeneratePosition(), Quaternion.identity);
             _crystals.Add(crystal);
         }
     }
 
-    private Vector3 GetNewPosition()
+    private Vector3 GeneratePosition()
     {
         float x = Random.Range(transform.position.x - (_spawnArea.x / 2), transform.position.x + (_spawnArea.x / 2));
         float y = transform.position.y;

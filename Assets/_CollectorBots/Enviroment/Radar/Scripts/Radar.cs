@@ -27,7 +27,7 @@ public class Radar
                 }
             }
 
-            await UniTask.Delay(1000);
+            await UniTask.Delay(5000);
             _animator.SetIsSearch(false);
             await UniTask.Delay(2000);
         }

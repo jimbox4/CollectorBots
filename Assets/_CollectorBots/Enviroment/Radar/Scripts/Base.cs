@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
+[SelectionBase]
 public class Base : MonoBehaviour
 {
     [SerializeField] Radar _radar;

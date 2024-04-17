@@ -1,12 +1,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[SelectionBase]
 [RequireComponent(typeof(Rigidbody))]
-public class Bot : Character
+public class Bot : MonoBehaviour
 {
     [SerializeField] private BotMover _mover;
     [Space]
-    [SerializeField] private BotInteractSystem _interact;
+    [SerializeField] private BotCollector _interact;
     [SerializeField] private Transform _hand;
     [Space]
     [SerializeField] private BotAnimator _animator;
