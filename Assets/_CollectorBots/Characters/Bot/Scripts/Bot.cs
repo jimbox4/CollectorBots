@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Rigidbody))]
@@ -11,20 +12,34 @@ public class Bot : Character
     [SerializeField] private BotAnimator _animator;
     [SerializeField] private BotAnimatorEvents _animatorEvents;
 
+    private IBotState _currentState;
+    private Dictionary<BotStateType, IBotState> _botStates;
+
     private Crystal _crystal;
-    private Vector3 _basePosition;
     private bool _isHandsEmpty = true;
 
+    public Vector3 BasePosition { get; private set; }
+
     public bool HasCrystalRef => _crystal != null;
+    public Vector3 CrystalPosition => _crystal.Position;
 
     private void Awake()
     {
         _mover.Initialize(GetComponent<Rigidbody>(), transform);
+
+        _botStates = new Dictionary<BotStateType, IBotState>()
+        {
+            {BotStateType.Return, new BotReturnState(this, _mover) },
+            {BotStateType.Collect, new BotCollectState(this, _mover) },
+            {BotStateType.Wait, new BotWaitState(_mover) },
+        };
+
+        _currentState = _botStates[BotStateType.Wait];
     }
 
     public void Initialize(Vector3 basePosition)
     {
-        _basePosition = basePosition;
+        BasePosition = basePosition;
     }
 
     private void OnEnable()
@@ -39,26 +54,9 @@ public class Bot : Character
 
     private void Update()
     {
-        UpdateAnimatorParams();
+        _animator.SetSpeed(_mover.Speed);
 
-        if (_crystal == null && _isHandsEmpty)
-        {
-            _animator.SetIsRelax(true);
-            _mover.ResetVelocitys();
-            return;
-        }
-
-        if (_isHandsEmpty)
-        {
-            var crystalPosition = _crystal.Position;
-            _mover.LookAt(crystalPosition);
-            _mover.MoveTo(crystalPosition, _isHandsEmpty == false);
-        }
-        else
-        {
-            _mover.LookAt(_basePosition);
-            _mover.MoveTo(_basePosition, _isHandsEmpty == false);
-        }
+        _currentState.Update();
 
         if (_crystal != null && _isHandsEmpty == true && GetDistaceTo(_crystal.Position) + 0.01f <= _mover.MaxDistanceToTarget)
         {
@@ -70,18 +68,21 @@ public class Bot : Character
     {
         _crystal = crystal;
         _animator.SetIsRelax(false);
+        ChangeState(BotStateType.Collect);
     }
 
     public bool TryCollectCrystal(out Crystal crystal)
     {
         crystal = null;
 
-        if (_crystal != null && _isHandsEmpty == false)
+        if (_isHandsEmpty == false)
         {
+            ChangeState(BotStateType.Wait);
             crystal = _crystal;
             _crystal.transform.SetParent(null);
             _isHandsEmpty = true;
             _crystal = null;
+            _animator.SetHasItem(_isHandsEmpty == false);
             _animator.ResetPickUpState();
 
             return true;
@@ -90,24 +91,37 @@ public class Bot : Character
         return false;
     }
 
-    private void UpdateAnimatorParams()
+    private void ChangeState(BotStateType stateType)
     {
-        _animator.SetHasItem(!_isHandsEmpty);
-        _animator.SetSpeed(_mover.InterpolatedSpeed);
+        if (_botStates.ContainsKey(stateType) == false)
+        {
+            throw new System.ArgumentException(nameof(stateType));
+        }
+
+        if (_botStates[stateType] == _currentState)
+        {
+            return;
+        }
+
+        _currentState.Exit();
+        _currentState = _botStates[stateType];
+        _currentState.Enter();
     }
 
     private void TakeCrystal()
     {
-        if(_interact.TryGetCrystal(out _crystal))
+        if (_interact.TryGetCrystal(out _crystal))
         {
             _crystal.SetParent(_hand);
             _isHandsEmpty = false;
+            ChangeState(BotStateType.Return);
+            _animator.SetHasItem(_isHandsEmpty == false);
         }
     }
 
     private float GetDistaceTo(Vector3 to)
     {
-        return Vector2.Distance(new Vector2(transform.position.x, transform.position.z), 
+        return Vector2.Distance(new Vector2(transform.position.x, transform.position.z),
             new Vector2(to.x, to.z));
     }
 

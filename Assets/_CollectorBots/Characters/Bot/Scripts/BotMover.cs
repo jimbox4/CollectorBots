@@ -17,7 +17,7 @@ public class BotMover
     private float _angleToTarget;
     private float _speedCoefficent;
 
-    public float InterpolatedSpeed => Mathf.Abs(_rigidbody.velocity.z) / _moveSpeed;
+    public float Speed => _moveSpeed;
 
     public void Initialize(Rigidbody rigidbody, Transform transform)
     {
