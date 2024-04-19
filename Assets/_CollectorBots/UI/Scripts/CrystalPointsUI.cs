@@ -4,7 +4,7 @@ using UnityEngine;
 [RequireComponent(typeof(TMP_Text))]
 public class CrystalPointsUI : MonoBehaviour
 {
-    [SerializeField] private Base _base;
+    [SerializeField] private CrystalStorage _storage;
 
     private TMP_Text _text;
 
@@ -15,16 +15,16 @@ public class CrystalPointsUI : MonoBehaviour
 
     private void OnEnable()
     {
-        _base.CrystalStorage.ValueChanged += UpdateText;
+        _storage.ValueChanged += UpdateText;
     }
 
     private void OnDisable()
     {
-        _base.CrystalStorage.ValueChanged -= UpdateText;
+        _storage.ValueChanged -= UpdateText;
     }
 
     private void UpdateText()
     {
-        _text.text = _base.CrystalStorage.Value.ToString();
+        _text.text = _storage.Value.ToString();
     }
 }

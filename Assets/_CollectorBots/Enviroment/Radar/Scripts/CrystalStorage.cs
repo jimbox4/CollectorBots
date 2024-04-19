@@ -1,6 +1,7 @@
 using System;
+using UnityEngine;
 
-public class CrystalStorage
+public class CrystalStorage : MonoBehaviour
 {
     private int _value;
 

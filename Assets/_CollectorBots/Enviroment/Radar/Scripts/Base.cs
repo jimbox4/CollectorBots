@@ -12,9 +12,7 @@ public class Base : MonoBehaviour
     [SerializeField] private Transform _botSpawnPoint;
     [Header("Crystal")]
     [SerializeField] private LayerMask _crystalLayer;
-
-
-    [NonSerialized] public CrystalStorage CrystalStorage = new CrystalStorage();
+    [SerializeField] private CrystalStorage _crystalStorage;
 
     [NonSerialized] public Queue<Crystal> Crystals = new Queue<Crystal>();
     [NonSerialized] public List<Crystal> GivenCrystals = new List<Crystal>();
@@ -36,7 +34,7 @@ public class Base : MonoBehaviour
         if (other.TryGetComponent(out Bot bot) && bot.TryCollectCrystal(out Crystal crystal))
         {
             GivenCrystals.Remove(crystal);
-            CrystalStorage.AddValue(crystal.Collect());
+            _crystalStorage.AddValue(crystal.Collect());
         }
     }
 
