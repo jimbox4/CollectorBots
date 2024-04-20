@@ -59,7 +59,12 @@ public class Bot : MonoBehaviour
 
         _currentState.Update();
 
-        if (_crystal != null && _isHandsEmpty == true && GetDistaceTo(_crystal.Position) + 0.01f <= _mover.MaxDistanceToTarget)
+        if (_crystal == null && _isHandsEmpty == false)
+        {
+            return;
+        }
+
+        if (IsReachedDistance())
         {
             _animator.SetPickUpState();
         }
@@ -108,6 +113,9 @@ public class Bot : MonoBehaviour
         _currentState = _botStates[stateType];
         _currentState.Enter();
     }
+
+    private bool IsReachedDistance() 
+        => GetDistaceTo(_crystal.Position) + 0.01f <= _mover.MaxDistanceToTarget;
 
     private void TakeCrystal()
     {
